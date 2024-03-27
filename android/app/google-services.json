@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "391309813991",
+    "project_id": "chat-analytics-demo",
+    "storage_bucket": "chat-analytics-demo.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:391309813991:android:77ee1bc517d3bccce99a42",
+        "android_client_info": {
+          "package_name": "com.company.chatanalyticsai"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "391309813991-73pp2r3ta2tq760sd123u7qrmb7248qv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDBbiCPB1lOr_47sw6GNQleLZrvnYmQSog"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "391309813991-73pp2r3ta2tq760sd123u7qrmb7248qv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

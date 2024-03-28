@@ -1,4 +1,4 @@
-package com.example.chat_analytics
+package com.company.chatanalyticsai
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 
 ThemeData lightTheme = ThemeData().copyWith(
   colorScheme:
-      ColorScheme.fromSeed(seedColor: const Color.fromARGB(200, 0, 102, 140)),
+      ColorScheme.fromSeed(seedColor: const Color.fromARGB(199, 0, 89, 140)),
   appBarTheme: const AppBarTheme(
     backgroundColor: Color.fromARGB(200, 0, 102, 140),
   ),

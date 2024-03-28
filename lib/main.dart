@@ -1,7 +1,7 @@
+import 'package:chat_analytics/firebase_options.dart';
 import 'package:chat_analytics/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-
 
 ThemeData lightTheme = ThemeData().copyWith(
   colorScheme:
@@ -14,9 +14,9 @@ ThemeData lightTheme = ThemeData().copyWith(
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp(
-  //   options: 
-  // );
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
   runApp(const MyApp());
 }
 

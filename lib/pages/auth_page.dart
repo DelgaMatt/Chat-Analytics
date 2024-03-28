@@ -22,10 +22,10 @@ class _AuthPageState extends State<AuthPage> {
             child: ElevatedButton(
               onPressed: () async {
                 await FirebaseAuthentication().signInWithGoogle();
-              //   await Navigator.push(
-              //     context,
-              //     MaterialPageRoute(builder: (context) => HomeScreen()),
-              //   );
+                await Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => HomeScreen()),
+                );
               },
               child: Padding(
                 padding: const EdgeInsets.all(8),

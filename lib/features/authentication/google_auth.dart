@@ -8,6 +8,11 @@ class GoogleAuth extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          side: BorderSide(
+            color: Theme.of(context).colorScheme.secondary,
+          )),
       onPressed: () async {
         await FirebaseAuthController().signInWithGoogle();
         await Navigator.push(
@@ -28,9 +33,12 @@ class GoogleAuth extends StatelessWidget {
             const SizedBox(
               width: 10,
             ),
-            const Text(
+            Text(
               "Login with Gmail",
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                  color: Theme.of(context).colorScheme.tertiary),
             ),
           ],
         ),

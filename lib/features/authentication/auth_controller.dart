@@ -21,7 +21,9 @@ class FirebaseAuthController {
 
         await _auth.signInWithCredential(authCredential);
       }
-    } on FirebaseAuthException catch (e) {}
+    } on FirebaseAuthException catch (e) {
+      print("catch $e");
+    }
   }
 
   Future<void> signOut() async {

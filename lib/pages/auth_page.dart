@@ -12,16 +12,12 @@ class _AuthPageState extends State<AuthPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: ,
-      body: Container(
-        // styling
-        child: Center(
+      body: Center(
           child: Container(
             margin: const EdgeInsets.symmetric(horizontal: 30),
             child: const GoogleAuth(),
           ),
         ),
-      ),
     );
   }
 }

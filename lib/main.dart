@@ -1,3 +1,4 @@
+import 'package:chat_analytics/app/theme/chat_analytics_colors.dart';
 import 'package:chat_analytics/firebase_options.dart';
 import 'package:chat_analytics/pages/auth_page.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -28,7 +29,7 @@ class MyApp extends StatelessWidget {
 
     return MaterialApp(
       title: 'Satellite',
-      theme: lightTheme,
+      theme: theme,
       themeMode: ThemeMode.light,
       home: const AuthPage()
       // StreamBuilder(

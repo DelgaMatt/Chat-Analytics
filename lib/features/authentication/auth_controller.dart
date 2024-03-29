@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class FirebaseAuthentication {
-  final _auth = FirebaseAuth.instance;
+final _auth = FirebaseAuth.instance;
+
+class FirebaseAuthController {
   final _googleSignIn = GoogleSignIn();
 
-  signInWithGoogle() async {
+  Future<void> signInWithGoogle() async {
     try {
       final GoogleSignInAccount? googleSignInAccount =
           await _googleSignIn.signIn();
@@ -20,14 +21,14 @@ class FirebaseAuthentication {
 
         await _auth.signInWithCredential(authCredential);
       }
-    } on FirebaseAuthException catch (e) {
-      print(e.message);
-      throw e;
-    }
+    } on FirebaseAuthException catch (e) {}
   }
 
-  signOut() async {
+  Future<void> signOut() async {
     await _auth.signOut();
-    await _googleSignIn.signOut();
+    await _googleSignIn
+        .signOut()
+        .then((response) => print("success"))
+        .catchError((e) => print("catch $e"));
   }
 }

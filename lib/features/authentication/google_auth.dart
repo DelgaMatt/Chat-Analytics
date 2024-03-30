@@ -1,5 +1,5 @@
 import 'package:chat_analytics/features/authentication/auth_controller.dart';
-import 'package:chat_analytics/pages/home_page.dart';
+import 'package:chat_analytics/pages/ind_record_page.dart';
 import 'package:flutter/material.dart';
 
 class GoogleAuth extends StatelessWidget {
@@ -17,7 +17,7 @@ class GoogleAuth extends StatelessWidget {
         await FirebaseAuthController().signInWithGoogle();
         await Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => HomeScreen()),
+          MaterialPageRoute(builder: (context) => const IndRecordScreen()),
         );
       },
       child: Padding(

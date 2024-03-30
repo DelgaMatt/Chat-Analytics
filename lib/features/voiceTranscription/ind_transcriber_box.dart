@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:chat_analytics/features/voiceTranscription/ind_waveform.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
+
 import 'package:sound_stream/sound_stream.dart';
 import 'package:web_socket_channel/io.dart';
 
@@ -68,7 +70,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
     });
   }
 
-  void _startRecord() async {
+  void startRecord() async {
     resetText();
     _initStream();
 
@@ -77,7 +79,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
     setState(() {});
   }
 
-  void _stopRecord() async {
+  void stopRecord() async {
     await _recorder.stop();
 
     setState(() {});
@@ -96,9 +98,9 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
   }
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) {      
     return Container(
-      height: 200,
+      height: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         color: Theme.of(context).colorScheme.secondary,
@@ -106,6 +108,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
       margin: const EdgeInsets.all(20),
       child: Column(
         children: [
+          const SizedBox(height: 20,),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -147,6 +150,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
               ),
             ],
           ),
+          const IndWaveform(),
           const SizedBox(height: 20),
           Center(
             child: Row(
@@ -161,7 +165,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
                   ),
                   onPressed: () {
                     updateText('');
-                    _startRecord();
+                    startRecord();
                   },
                   child: const Text('Start', style: TextStyle(fontSize: 30)),
                 ),
@@ -174,7 +178,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
                         MaterialStateProperty.all<Color>(Colors.white),
                   ),
                   onPressed: () {
-                    _stopRecord();
+                    stopRecord();
                   },
                   child: const Text('Stop', style: TextStyle(fontSize: 30)),
                 ),

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:chat_analytics/app/config/env_config.dart';
 import 'package:chat_analytics/features/voiceTranscription/ind_waveform.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
@@ -8,9 +9,8 @@ import 'package:permission_handler/permission_handler.dart';
 import 'package:sound_stream/sound_stream.dart';
 import 'package:web_socket_channel/io.dart';
 
-const serverUrl =
-    'wss://api.deepgram.com/v1/listen?encoding=linear16&sample_rate=16000&language=en-GB';
-const apiKey = 'efd795e84d41056a0391602f5b737f0940bb3a6b';
+final serverUrl = EnvConfig.dgServerUrl;
+final apiKey = EnvConfig.dgApiKey;
 
 class IndTranscriberBox extends StatefulWidget {
   const IndTranscriberBox({super.key});

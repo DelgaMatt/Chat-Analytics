@@ -9,14 +9,13 @@ class IndRecordScreen extends StatefulWidget {
 }
 
 class _IndRecordScreenState extends State<IndRecordScreen> {
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       backgroundColor: Colors.black, //
       drawer: const Drawer(),
       appBar: AppBar(
+        title: const Text('Records'),
         backgroundColor: Colors.transparent,
         surfaceTintColor: Colors.transparent,
         actions: [
@@ -35,11 +34,14 @@ class _IndRecordScreenState extends State<IndRecordScreen> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        fixedColor: Theme.of(context).colorScheme.tertiary,
-        items: const [
-        BottomNavigationBarItem(icon: Icon(Icons.save), label: 'Records'),
-        BottomNavigationBarItem(icon: Icon(Icons.auto_graph), label: 'Insight')
-      ]),
+          elevation: 4,
+          backgroundColor: const Color.fromARGB(255, 52, 52, 52),
+          fixedColor: Theme.of(context).colorScheme.tertiary,
+          items: const [
+            BottomNavigationBarItem(icon: Icon(Icons.save), label: 'Records'),
+            BottomNavigationBarItem(
+                icon: Icon(Icons.auto_graph), label: 'Insight')
+          ]),
     );
   }
 }

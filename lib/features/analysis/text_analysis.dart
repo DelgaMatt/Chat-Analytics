@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:chat_analytics/features/analysis/pseudo_analysis_data.dart';
 import 'package:flutter/material.dart';
 
@@ -18,13 +16,13 @@ class _TextAnalysisState extends State<TextAnalysis> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.all(25),
+      padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
         border: Border.all(color: Theme.of(context).colorScheme.secondary),
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
       ),
-      margin: const EdgeInsets.symmetric(horizontal: 20),
+      margin: const EdgeInsets.all(20),
       child: Column(
         children: [
           for (final analysis in pseudoData)
@@ -50,7 +48,7 @@ class _TextAnalysisState extends State<TextAnalysis> {
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
                       color: Colors.black,
-                        border: Border.all(),
+                        border: Border.all(color: Theme.of(context).colorScheme.secondary),
                         borderRadius: BorderRadius.circular(20)),
                     child: Text(
                       analysis.response,

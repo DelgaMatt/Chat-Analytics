@@ -31,21 +31,7 @@ class MyApp extends StatelessWidget {
       title: 'Satellite',
       theme: theme,
       themeMode: ThemeMode.light,
-      home: const AuthPage()
-      // StreamBuilder(
-      //   stream: FirebaseAuth.instance.authStateChanges(),
-      //   builder: (ctx, snapshot) {
-      //     // if firebase is still waiting or loading the token..
-      //     if (snapshot.connectionState == ConnectionState.waiting) {
-      //       return const SplashScreen();
-      //     }
-
-      //     if (snapshot.hasData) {
-      //       return const ChatScreen();
-      //     }
-      //     return const AuthScreen();
-      //   },
-      // ),
+      home: const AuthPage(),
     );
   }
 }

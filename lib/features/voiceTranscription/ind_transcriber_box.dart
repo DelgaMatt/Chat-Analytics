@@ -113,7 +113,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
       height: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        color: Theme.of(context).colorScheme.secondary,
+        gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
       ),
       margin: const EdgeInsets.all(20),
       child: Column(
@@ -126,6 +126,11 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 OutlinedButton(
+                  style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black,
+                    ),
+                  ),
                   onPressed: () {},
                   child: const Text(
                     "View Text",
@@ -133,6 +138,11 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
                 ),
                 const SizedBox(width: 15),
                 OutlinedButton(
+                     style: ButtonStyle(
+                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black,
+                    ),
+                  ),
                   onPressed: () {},
                   child: const Text(
                     "View Summary",

@@ -7,7 +7,7 @@ final theme = ThemeData(
     background: Colors.black,
     brightness: Brightness.dark,
     primary:  Colors.black,
-    secondary: Color.fromARGB(255, 6, 102, 181),
+    secondary: Color.fromRGBO(60, 110, 133, 1),
     tertiary: Color.fromARGB(255, 255, 255, 255),
   ),
 );

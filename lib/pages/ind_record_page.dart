@@ -1,6 +1,8 @@
 import 'package:chat_analytics/features/analysis/pseudo_analysis_data.dart';
 import 'package:chat_analytics/features/analysis/text_analysis.dart';
 import 'package:chat_analytics/features/voiceTranscription/ind_transcriber_box.dart';
+import 'package:chat_analytics/widgets/analysis_sliders.dart';
+import 'package:chat_analytics/widgets/personality_score_box.dart';
 import 'package:flutter/material.dart';
 
 class IndRecordScreen extends StatefulWidget {
@@ -36,6 +38,8 @@ class _IndRecordScreenState extends State<IndRecordScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               IndTranscriberBox(),
+              AnalysisSliders(),
+              PersonalityBox(),
               TextAnalysis(
                 availableAnalysis: pseudoData,
               ),

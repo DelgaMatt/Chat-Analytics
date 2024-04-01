@@ -21,6 +21,7 @@ class IndTranscriberBox extends StatefulWidget {
 
 class _IndTranscriberBox extends State<IndTranscriberBox> {
   String myText = "To start transcribing your voice, press start.";
+
   final RecorderStream _recorder = RecorderStream();
 
   late StreamSubscription _recorderStatus;
@@ -44,11 +45,6 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
     super.dispose();
   }
 
-  void onLayoutDone(Duration timeStamp) async {
-    await Permission.microphone.request();
-    setState(() {});
-  }
-
   Future<void> _initStream() async {
     channel = IOWebSocketChannel.connect(Uri.parse(serverUrl),
         headers: {'Authorization': 'Token $apiKey'});
@@ -68,15 +64,24 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
         setState(() {});
       }
     });
+
+    await Future.wait([
+      _recorder.initialize(),
+    ]);
   }
 
   void startRecord() async {
-    resetText();
-    _initStream();
+    try {
+      resetText();
+      _initStream();
 
-    await _recorder.start();
+      await _recorder.start();
 
-    setState(() {});
+      setState(() {});
+    } on Exception catch (error) {
+      print(error);
+      rethrow;
+    }
   }
 
   void stopRecord() async {
@@ -85,9 +90,14 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
     setState(() {});
   }
 
+  void onLayoutDone(Duration timeStamp) async {
+    await Permission.microphone.request();
+    setState(() {});
+  }
+
   void updateText(newText) {
     setState(() {
-      myText = '$myText $newText';
+      myText = newText;
     });
   }
 
@@ -98,7 +108,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
   }
 
   @override
-  Widget build(BuildContext context) {      
+  Widget build(BuildContext context) {
     return Container(
       height: 300,
       decoration: BoxDecoration(
@@ -108,7 +118,9 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
       margin: const EdgeInsets.all(20),
       child: Column(
         children: [
-          const SizedBox(height: 20,),
+          const SizedBox(
+            height: 20,
+          ),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

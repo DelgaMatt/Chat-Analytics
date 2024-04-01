@@ -31,7 +31,8 @@ class _IndWaveform extends State<IndWaveform> {
       IconButton(
           icon: const Icon(Icons.mic),
           tooltip: 'Start recording',
-          onPressed: () {}),
+          onPressed: () {},
+      ),
       AudioWaveforms(
         size: Size(MediaQuery.of(context).size.width / 2, 50),
         recorderController: controller,

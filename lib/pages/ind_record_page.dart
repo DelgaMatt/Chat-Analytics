@@ -1,3 +1,5 @@
+import 'package:chat_analytics/features/analysis/pseudo_analysis_data.dart';
+import 'package:chat_analytics/features/analysis/text_analysis.dart';
 import 'package:chat_analytics/features/voiceTranscription/ind_transcriber_box.dart';
 import 'package:flutter/material.dart';
 
@@ -25,11 +27,19 @@ class _IndRecordScreenState extends State<IndRecordScreen> {
           )
         ],
       ),
-      body: const SingleChildScrollView(
-        child: Center(
-          child: Column(
+      body: SingleChildScrollView(
+        child: Container(
+          decoration: BoxDecoration(
+            gradient:LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
+      ),
+          child: const Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [IndTranscriberBox()],
+            children: [
+              IndTranscriberBox(),
+              TextAnalysis(
+                availableAnalysis: pseudoData,
+              ),
+            ],
           ),
         ),
       ),

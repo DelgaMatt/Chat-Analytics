@@ -157,29 +157,28 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
               ],
             ),
           ),
-          const SizedBox(height: 30),
-          Row(
-            children: <Widget>[
-              Expanded(
-                flex: 3,
-                child: SizedBox(
-                  width: 150,
-                  child: Text(
-                    myText,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 50,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Theme.of(context).colorScheme.tertiary),
-                  ),
-                ),
+          // const SizedBox(height: 30),
+
+          Container(
+            height: 125,
+            margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
+            padding: const EdgeInsets.all(10),
+            width: double.infinity,
+            decoration: BoxDecoration(
+                color: Colors.black, borderRadius: BorderRadius.circular(20)),
+            child: Column(children: [
+              Text(
+                myText,
+                textAlign: TextAlign.center,
+                overflow: TextOverflow.ellipsis,
+                maxLines: 50,
+                style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    fontSize: 15,
+                    color: Theme.of(context).colorScheme.tertiary),
               ),
-            ],
+            ]),
           ),
-          const IndWaveform(),
-          const SizedBox(height: 20),
           Center(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,

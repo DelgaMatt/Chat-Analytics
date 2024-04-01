@@ -9,4 +9,7 @@ abstract class EnvConfig {
 
   @EnviedField(varName: 'DG_API_KEY', obfuscate: true)
   static final String dgApiKey = _EnvConfig.dgApiKey;
+
+  @EnviedField(varName: 'OPEN_AI_API_KEY', obfuscate: true)
+  static final String openAiApiKey = _EnvConfig.openAiApiKey;
 }

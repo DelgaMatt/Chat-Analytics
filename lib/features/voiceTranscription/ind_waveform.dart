@@ -10,6 +10,8 @@ class IndWaveform extends StatefulWidget {
 
 class _IndWaveform extends State<IndWaveform> {
   late final RecorderController controller = RecorderController();
+  
+  bool isRecording = false;
 
   void _initialiseController() {
     controller
@@ -27,25 +29,40 @@ class _IndWaveform extends State<IndWaveform> {
 
   @override
   Widget build(BuildContext context) {
-    return Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-      IconButton(
-          icon: const Icon(Icons.mic),
+
+    return Container(
+      // height: 125,
+            margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            // padding: const EdgeInsets.all(5),
+            width: double.infinity,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              borderRadius: BorderRadius.circular(15)
+            ),
+      child: Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+        IconButton(
           tooltip: 'Start recording',
-          onPressed: () {},
-      ),
-      AudioWaveforms(
-        size: Size(MediaQuery.of(context).size.width / 2, 50),
-        recorderController: controller,
-        enableGesture: true,
-        waveStyle: const WaveStyle(
-          waveColor: Colors.white,
-          showDurationLabel: true,
-          spacing: 8.0,
-          showBottom: false,
-          extendWaveform: true,
-          showMiddleLine: false,
+          onPressed: () {
+            setState(() {
+              isRecording = !isRecording;
+            });
+          },
+          icon: isRecording ? const Icon(Icons.play_circle) : const Icon(Icons.pause_circle),
         ),
-      ),
-    ]);
+        AudioWaveforms(
+          size: Size(MediaQuery.of(context).size.width / 2, 50),
+          recorderController: controller,
+          enableGesture: true,
+          waveStyle: const WaveStyle(
+            waveColor: Colors.white,
+            showDurationLabel: true,
+            spacing: 8.0,
+            showBottom: false,
+            extendWaveform: true,
+            showMiddleLine: false,
+          ),
+        ),
+      ]),
+    );
   }
 }

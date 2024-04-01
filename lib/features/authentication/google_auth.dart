@@ -15,10 +15,12 @@ class GoogleAuth extends StatelessWidget {
           )),
       onPressed: () async {
         await FirebaseAuthController().signInWithGoogle();
-        await Navigator.push(
+        if (context.mounted) {
+          await Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => const IndRecordScreen()),
         );
+        }
       },
       child: Padding(
         padding: const EdgeInsets.all(8),

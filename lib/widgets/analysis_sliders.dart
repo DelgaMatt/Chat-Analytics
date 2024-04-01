@@ -7,7 +7,7 @@ class AnalysisSliders extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
-      padding: const EdgeInsets.all(10),
+      // padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
@@ -16,9 +16,10 @@ class AnalysisSliders extends StatelessWidget {
             colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
       ),
       child: Row(
+        mainAxisSize: MainAxisSize.min,
         children: [
           Container(
-            padding: const EdgeInsets.symmetric(vertical: 10),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 0),
             child: const Column(
               children: [
                 Column(
@@ -27,9 +28,12 @@ class AnalysisSliders extends StatelessWidget {
                       'Trust',
                       textAlign: TextAlign.start,
                     ),
-                    Slider(
-                      value: 0.8,
-                      onChanged: null,
+                    SizedBox(
+                      width: 1,
+                      child: Slider(
+                        value: 0.8,
+                        onChanged: null,
+                      ),
                     )
                   ],
                 ),
@@ -48,7 +52,7 @@ class AnalysisSliders extends StatelessWidget {
               ],
             ),
           ),
-                    Container(
+          Container(
             padding: const EdgeInsets.symmetric(vertical: 10),
             child: const Column(
               children: [

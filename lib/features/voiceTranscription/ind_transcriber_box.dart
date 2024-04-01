@@ -51,8 +51,8 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
 
     channel.stream.listen((event) async {
       final parsedJson = jsonDecode(event);
-
-      updateText(parsedJson['channel']['alternatives'][0]['transcript']);
+      print(parsedJson);
+      updateText(parsedJson['channel']?['alternatives'][0]['transcript']);
     });
 
     _audioStream = _recorder.audioStream.listen((data) {
@@ -70,24 +70,23 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
     ]);
   }
 
-  void startRecord() async {
+  Future<void> startRecord() async {
     try {
       resetText();
-      _initStream();
+      await _initStream();
 
       await _recorder.start();
 
-      setState(() {});
+      // setState(() {});
     } on Exception catch (error) {
-      print(error);
-      rethrow;
+      print('catch $error');
     }
   }
 
   void stopRecord() async {
     await _recorder.stop();
 
-    setState(() {});
+    // setState(() {});
   }
 
   void onLayoutDone(Duration timeStamp) async {
@@ -113,7 +112,10 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
       height: 300,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(begin: Alignment.bottomCenter, end: Alignment.topCenter, colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
+        gradient: LinearGradient(
+            begin: Alignment.bottomCenter,
+            end: Alignment.topCenter,
+            colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
       ),
       margin: const EdgeInsets.all(20),
       child: Column(
@@ -127,8 +129,10 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
               children: [
                 OutlinedButton(
                   style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black,
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.black,
                     ),
                   ),
                   onPressed: () {},
@@ -138,9 +142,11 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
                 ),
                 const SizedBox(width: 15),
                 OutlinedButton(
-                     style: ButtonStyle(
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.black,
+                  style: ButtonStyle(
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor: MaterialStateProperty.all<Color>(
+                      Colors.black,
                     ),
                   ),
                   onPressed: () {},
@@ -185,9 +191,9 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
                     foregroundColor:
                         MaterialStateProperty.all<Color>(Colors.white),
                   ),
-                  onPressed: () {
-                    updateText('');
-                    startRecord();
+                  onPressed: () async {
+                    // updateText('');
+                    await startRecord();
                   },
                   child: const Text('Start', style: TextStyle(fontSize: 30)),
                 ),

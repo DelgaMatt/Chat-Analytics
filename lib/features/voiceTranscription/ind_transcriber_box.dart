@@ -1,8 +1,10 @@
 import 'dart:async';
 import 'dart:convert';
+import 'package:http/http.dart' as http;
 
 import 'package:chat_analytics/app/config/env_config.dart';
-import 'package:chat_analytics/features/voiceTranscription/ind_waveform.dart';
+import 'package:chat_analytics/features/openAI/setiment_summary.dart';
+// import 'package:chat_analytics/features/voiceTranscription/ind_waveform.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -11,6 +13,7 @@ import 'package:web_socket_channel/io.dart';
 
 final serverUrl = EnvConfig.dgServerUrl;
 final apiKey = EnvConfig.dgApiKey;
+final openApiKey = EnvConfig.openAiApiKey;
 
 class IndTranscriberBox extends StatefulWidget {
   const IndTranscriberBox({super.key});
@@ -21,6 +24,9 @@ class IndTranscriberBox extends StatefulWidget {
 
 class _IndTranscriberBox extends State<IndTranscriberBox> {
   String myText = "To start transcribing your voice, press start.";
+  bool transcriptionView = true;
+  String mySummary = 'Summarizing your transcription';
+  bool expanded = false;
 
   final RecorderStream _recorder = RecorderStream();
 
@@ -51,8 +57,14 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
 
     channel.stream.listen((event) async {
       final parsedJson = jsonDecode(event);
+
       print(parsedJson);
-      updateText(parsedJson['channel']?['alternatives'][0]['transcript']);
+
+      final textFeedback =
+          parsedJson['channel']?['alternatives'][0]['transcript'];
+
+      generateText(textFeedback);
+      updateText(textFeedback);
     });
 
     _audioStream = _recorder.audioStream.listen((data) {
@@ -74,10 +86,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
     try {
       resetText();
       await _initStream();
-
       await _recorder.start();
-
-      // setState(() {});
     } on Exception catch (error) {
       print('catch $error');
     }
@@ -85,8 +94,6 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
 
   void stopRecord() async {
     await _recorder.stop();
-
-    // setState(() {});
   }
 
   void onLayoutDone(Duration timeStamp) async {
@@ -106,8 +113,39 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
     });
   }
 
+// ------------------------------------------------------------ Sentimental Analysis ---->
+  Future<String> generateText(String parsedJSON) async {
+    final response = await http.post(
+      Uri.parse('https://api.openai.com/v1/completions'),
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer $openApiKey',
+      },
+      body: jsonEncode({
+        'model': 'gpt-3.5-turbo-instruct',
+        'prompt':
+            "Write a short summary as a sentimental analysis on the transcription.\n\nTranscription$parsedJSON\"\nSentiment:",
+        'temperature': 0.7,
+        'max_tokens': 100,
+      }),
+    );
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body);
+
+      setState(() {
+        mySummary = data['choices'][0]['text'].toString();
+      });
+
+      return data['choices'][0]['text'].toString();
+    } else {
+      throw Exception('Failed to generate text: ${response.statusCode}');
+    }
+  }
+  // ----------------------------------------------------------------------------------->
+
   @override
   Widget build(BuildContext context) {
+
     return Container(
       height: 300,
       decoration: BoxDecoration(
@@ -135,7 +173,11 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
                       Colors.black,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      transcriptionView = true;
+                    });
+                  },
                   child: const Text(
                     "View Text",
                   ),
@@ -149,7 +191,11 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
                       Colors.black,
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      transcriptionView = false;
+                    });
+                  },
                   child: const Text(
                     "View Summary",
                   ),
@@ -157,27 +203,48 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
               ],
             ),
           ),
-          // const SizedBox(height: 30),
-
-          Container(
-            height: 125,
-            margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
-            padding: const EdgeInsets.all(10),
-            width: double.infinity,
-            decoration: BoxDecoration(
-                color: Colors.black, borderRadius: BorderRadius.circular(20)),
-            child: Column(children: [
-              Text(
-                myText,
-                textAlign: TextAlign.center,
-                overflow: TextOverflow.ellipsis,
-                maxLines: 50,
-                style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 15,
-                    color: Theme.of(context).colorScheme.tertiary),
-              ),
-            ]),
+          GestureDetector(
+            onTap: () {
+              setState(() {
+                expanded = !expanded;
+              });
+            },
+            child: AnimatedContainer(
+              duration: const Duration(milliseconds: 300),
+              // height: 125,
+              margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
+              padding: const EdgeInsets.all(10),
+              width: double.infinity,
+              decoration: BoxDecoration(
+                  color: Colors.black, borderRadius: BorderRadius.circular(20)),
+              child: Column(
+                children: [
+                if (transcriptionView)
+                  Text(
+                    myText,
+                    textAlign: TextAlign.center,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.tertiary),
+                  ),
+                if (!transcriptionView)
+                  Text(
+                    mySummary,
+                    textAlign: TextAlign.center,
+                        overflow: expanded
+                          ? TextOverflow.visible
+                          : TextOverflow.ellipsis,
+                      maxLines: expanded ? null : 2,
+                    style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 15,
+                        color: Theme.of(context).colorScheme.tertiary),
+                  ),
+              ]),
+            ),
           ),
           Center(
             child: Row(

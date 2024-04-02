@@ -9,11 +9,13 @@ class AuthPage extends StatefulWidget {
 }
 
 class _AuthPageState extends State<AuthPage> {
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
           child: Container(
+
             margin: const EdgeInsets.symmetric(horizontal: 30),
             child: const GoogleAuth(),
           ),

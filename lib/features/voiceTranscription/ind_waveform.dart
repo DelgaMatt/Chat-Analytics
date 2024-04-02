@@ -31,9 +31,7 @@ class _IndWaveform extends State<IndWaveform> {
   Widget build(BuildContext context) {
 
     return Container(
-      // height: 125,
             margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-            // padding: const EdgeInsets.all(5),
             width: double.infinity,
             decoration: BoxDecoration(
               color: Colors.black,

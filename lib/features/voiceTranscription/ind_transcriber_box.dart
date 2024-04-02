@@ -3,8 +3,6 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 import 'package:chat_analytics/app/config/env_config.dart';
-import 'package:chat_analytics/features/openAI/setiment_summary.dart';
-// import 'package:chat_analytics/features/voiceTranscription/ind_waveform.dart';
 import 'package:flutter/material.dart';
 import 'package:permission_handler/permission_handler.dart';
 
@@ -27,6 +25,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
   bool transcriptionView = true;
   String mySummary = 'Summarizing your transcription';
   bool expanded = false;
+
 
   final RecorderStream _recorder = RecorderStream();
 
@@ -114,7 +113,7 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
   }
 
 // ------------------------------------------------------------ Sentimental Analysis ---->
-  Future<String> generateText(String parsedJSON) async {
+  Future<String?> generateText(String parsedJSON) async {
     final response = await http.post(
       Uri.parse('https://api.openai.com/v1/completions'),
       headers: {
@@ -145,141 +144,145 @@ class _IndTranscriberBox extends State<IndTranscriberBox> {
 
   @override
   Widget build(BuildContext context) {
-
-    return Container(
-      height: 300,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(20),
-        gradient: LinearGradient(
-            begin: Alignment.bottomCenter,
-            end: Alignment.topCenter,
-            colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
-      ),
-      margin: const EdgeInsets.all(20),
-      child: Column(
-        children: [
-          const SizedBox(
-            height: 20,
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                OutlinedButton(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.black,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      transcriptionView = true;
-                    });
-                  },
-                  child: const Text(
-                    "View Text",
-                  ),
-                ),
-                const SizedBox(width: 15),
-                OutlinedButton(
-                  style: ButtonStyle(
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
-                    backgroundColor: MaterialStateProperty.all<Color>(
-                      Colors.black,
-                    ),
-                  ),
-                  onPressed: () {
-                    setState(() {
-                      transcriptionView = false;
-                    });
-                  },
-                  child: const Text(
-                    "View Summary",
-                  ),
-                )
-              ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(minHeight: 300),
+      child: Container(
+        decoration: BoxDecoration(
+          border: Border.all(
+              color: Theme.of(context).colorScheme.secondaryContainer),
+          borderRadius: BorderRadius.circular(20),
+          gradient: LinearGradient(
+              begin: Alignment.bottomCenter,
+              end: Alignment.topCenter,
+              colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
+        ),
+        margin: const EdgeInsets.all(20),
+        child: Column(
+          children: [
+            const SizedBox(
+              height: 20,
             ),
-          ),
-          GestureDetector(
-            onTap: () {
-              setState(() {
-                expanded = !expanded;
-              });
-            },
-            child: AnimatedContainer(
-              duration: const Duration(milliseconds: 300),
-              // height: 125,
-              margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
-              padding: const EdgeInsets.all(10),
-              width: double.infinity,
-              decoration: BoxDecoration(
-                  color: Colors.black, borderRadius: BorderRadius.circular(20)),
-              child: Column(
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                if (transcriptionView)
-                  Text(
-                    myText,
-                    textAlign: TextAlign.center,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Theme.of(context).colorScheme.tertiary),
+                  OutlinedButton(
+                    style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.black,
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        transcriptionView = true;
+                      });
+                    },
+                    child: const Text(
+                      "View Text",
+                    ),
                   ),
-                if (!transcriptionView)
-                  Text(
-                    mySummary,
-                    textAlign: TextAlign.center,
-                        overflow: expanded
+                  const SizedBox(width: 15),
+                  OutlinedButton(
+                    style: ButtonStyle(
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                        Colors.black,
+                      ),
+                    ),
+                    onPressed: () {
+                      setState(() {
+                        transcriptionView = false;
+                      });
+                    },
+                    child: const Text(
+                      "View Summary",
+                    ),
+                  )
+                ],
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  expanded = !expanded;
+                });
+              },
+              child: AnimatedContainer(
+                duration: const Duration(milliseconds: 300),
+                // height: 125,
+                margin: const EdgeInsets.fromLTRB(20, 15, 20, 10),
+                padding: const EdgeInsets.all(10),
+                width: double.infinity,
+                decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(20)),
+                child:
+                    Column(mainAxisAlignment: MainAxisAlignment.end, children: [
+                  if (transcriptionView)
+                    Text(
+                      myText,
+                      textAlign: TextAlign.center,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 2,
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.tertiary),
+                    ),
+                  if (!transcriptionView)
+                    Text(
+                      mySummary,
+                      textAlign: TextAlign.center,
+                      overflow: expanded
                           ? TextOverflow.visible
                           : TextOverflow.ellipsis,
                       maxLines: expanded ? null : 2,
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 15,
-                        color: Theme.of(context).colorScheme.tertiary),
-                  ),
-              ]),
+                      style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 15,
+                          color: Theme.of(context).colorScheme.tertiary),
+                    ),
+                ]),
+              ),
             ),
-          ),
-          Center(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                OutlinedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.blue),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+            Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: <Widget>[
+                  OutlinedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).colorScheme.primary),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                    onPressed: () async {
+                      // updateText('');
+                      await startRecord();
+                    },
+                    child: const Text('Start', style: TextStyle(fontSize: 30)),
                   ),
-                  onPressed: () async {
-                    // updateText('');
-                    await startRecord();
-                  },
-                  child: const Text('Start', style: TextStyle(fontSize: 30)),
-                ),
-                const SizedBox(width: 5),
-                OutlinedButton(
-                  style: ButtonStyle(
-                    backgroundColor:
-                        MaterialStateProperty.all<Color>(Colors.red),
-                    foregroundColor:
-                        MaterialStateProperty.all<Color>(Colors.white),
+                  const SizedBox(width: 5),
+                  OutlinedButton(
+                    style: ButtonStyle(
+                      backgroundColor: MaterialStateProperty.all<Color>(
+                          Theme.of(context).colorScheme.primary),
+                      foregroundColor:
+                          MaterialStateProperty.all<Color>(Colors.white),
+                    ),
+                    onPressed: () {
+                      stopRecord();
+                    },
+                    child: const Text('Stop', style: TextStyle(fontSize: 30)),
                   ),
-                  onPressed: () {
-                    stopRecord();
-                  },
-                  child: const Text('Stop', style: TextStyle(fontSize: 30)),
-                ),
-              ],
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

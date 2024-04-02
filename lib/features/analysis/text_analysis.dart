@@ -18,7 +18,7 @@ class _TextAnalysisState extends State<TextAnalysis> {
     return Container(
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
-        border: Border.all(color: Theme.of(context).colorScheme.secondary),
+        border: Border.all(color: Theme.of(context).colorScheme.secondaryContainer),
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
       ),
@@ -47,8 +47,7 @@ class _TextAnalysisState extends State<TextAnalysis> {
                     width: double.infinity,
                     padding: const EdgeInsets.all(10.0),
                     decoration: BoxDecoration(
-                      color: Colors.black,
-                        border: Border.all(color: Theme.of(context).colorScheme.secondary),
+                        border: Border.all(color: Theme.of(context).colorScheme.secondaryContainer),
                         borderRadius: BorderRadius.circular(20)),
                     child: Text(
                       analysis.response,

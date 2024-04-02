@@ -9,6 +9,8 @@ class AnalysisSliders extends StatelessWidget {
       margin: const EdgeInsets.fromLTRB(20, 0, 20, 20),
       padding: const EdgeInsets.all(5),
       decoration: BoxDecoration(
+        border:
+            Border.all(color: Theme.of(context).colorScheme.secondaryContainer),
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
             begin: Alignment.bottomRight,
@@ -31,10 +33,10 @@ class AnalysisSliders extends StatelessWidget {
                       textAlign: TextAlign.start,
                     ),
                     Slider(
-                        value: 0.3,
-                        // secondaryTrackValue: 0.5,
-                        onChanged: null,
-                      ),
+                      value: 0.3,
+                      // secondaryTrackValue: 0.5,
+                      onChanged: null,
+                    ),
                   ],
                 ),
                 Column(

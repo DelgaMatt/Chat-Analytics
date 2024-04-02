@@ -31,8 +31,8 @@ class _IndRecordScreenState extends State<IndRecordScreen> {
       ),
       body: SingleChildScrollView(
         child: Container(
-          decoration: BoxDecoration(
-            gradient:LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: [Theme.of(context).colorScheme.secondary, Colors.black]),
+          decoration: const BoxDecoration(
+            color: Colors.black,
       ),
           child: const Column(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

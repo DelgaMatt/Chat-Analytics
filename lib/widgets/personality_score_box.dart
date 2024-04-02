@@ -9,6 +9,7 @@ class PersonalityBox extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 20),
       padding: const EdgeInsets.all(15),
       decoration: BoxDecoration(
+        border: Border.all(color: Theme.of(context).colorScheme.secondaryContainer),
         borderRadius: BorderRadius.circular(20),
         gradient: LinearGradient(
             begin: Alignment.bottomRight,
